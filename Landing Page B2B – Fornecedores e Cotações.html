@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>CARFA/Web — Fornecedores e cotações B2B</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #12304A;
+            --blue: #2563EB;
+            --green: #16A36A;
+            --bg: #fff;
+            --alt: #F5F7FA;
+            --mut: #64748B;
+            --txt: #12304A;
+            --line: #E2E8F0;
+            --card: #fff;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0b1b2b;
+                --alt: #10263a;
+                --txt: #EAF0F7;
+                --mut: #9FB0C3;
+                --line: #223a52;
+                --card: #12304A
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #0b1b2b;
+            --alt: #10263a;
+            --txt: #EAF0F7;
+            --mut: #9FB0C3;
+            --line: #223a52;
+            --card: #12304A
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--txt);
+            font-family: Inter, system-ui, sans-serif;
+            line-height: 1.5;
+            min-width: 1280px
+        }
+
+        .w {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            background: var(--bg);
+            border-bottom: 1px solid var(--line)
+        }
+
+        header .w {
+            display: flex;
+            align-items: center;
+            height: 72px;
+            gap: 32px
+        }
+
+        .logo {
+            font-weight: 800;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-right: auto
+        }
+
+        .logo i {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, var(--blue), var(--green))
+        }
+
+        nav a {
+            margin-right: 28px;
+            font-size: 14px;
+            color: var(--mut);
+            font-weight: 500
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            border: 1px solid var(--line)
+        }
+
+        .p {
+            background: var(--blue);
+            color: #fff;
+            border-color: var(--blue)
+        }
+
+        .g {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green)
+        }
+
+        section {
+            padding: 96px 0
+        }
+
+        .alt {
+            background: var(--alt)
+        }
+
+        h1 {
+            font-size: 54px;
+            line-height: 1.08;
+            letter-spacing: -1.5px;
+            margin: 0 0 20px
+        }
+
+        h2 {
+            font-size: 38px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin: 0 0 16px;
+            max-width: 760px
+        }
+
+        p.l {
+            color: var(--mut);
+            font-size: 18px;
+            max-width: 620px;
+            margin: 0 0 28px
+        }
+
+        .eye {
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px
+        }
+
+        .two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: center
+        }
+
+        .three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px
+        }
+
+        .four {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 24px
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+            font-size: 17px
+        }
+
+        .card p {
+            margin: 0;
+            color: var(--mut);
+            font-size: 15px
+        }
+
+        .ui {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 8px 24px rgba(18, 48, 74, .08)
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 14px
+        }
+
+        .row:last-child {
+            border: 0
+        }
+
+        .row b {
+            flex: 1
+        }
+
+        .av {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--alt);
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            color: var(--blue);
+            font-size: 13px
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 99px;
+            background: rgba(22, 163, 106, .14);
+            color: var(--green)
+        }
+
+        .tag.w2 {
+            background: rgba(245, 158, 11, .16);
+            color: #b45309
+        }
+
+        .search {
+            background: var(--alt);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--mut);
+            font-size: 14px;
+            margin-bottom: 8px
+        }
+
+        ul.ck {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 20px
+        }
+
+        ul.ck li {
+            font-size: 15px;
+            padding-left: 24px;
+            position: relative
+        }
+
+        ul.ck li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: 700
+        }
+
+        .prob li {
+            margin-bottom: 10px;
+            color: var(--mut)
+        }
+
+        .step {
+            position: relative
+        }
+
+        .step .n {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            margin-bottom: 16px
+        }
+
+        .steps {
+            position: relative
+        }
+
+        .steps:before {
+            content: "";
+            position: absolute;
+            top: 22px;
+            left: 44px;
+            right: 44px;
+            border-top: 2px dashed var(--line)
+        }
+
+        .step .n {
+            position: relative
+        }
+
+        .seg {
+            text-align: left
+        }
+
+        .seg .ic {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(37, 99, 235, .1);
+            margin-bottom: 14px;
+            display: grid;
+            place-items: center;
+            color: var(--blue);
+            font-weight: 700
+        }
+
+        .bars {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            height: 110px;
+            margin-top: 10px
+        }
+
+        .bars span {
+            flex: 1;
+            background: var(--blue);
+            border-radius: 4px 4px 0 0;
+            opacity: .85
+        }
+
+        .kpi {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 12px
+        }
+
+        .kpi div {
+            background: var(--alt);
+            border-radius: 8px;
+            padding: 10px
+        }
+
+        .kpi b {
+            font-size: 22px;
+            display: block
+        }
+
+        .kpi small {
+            color: var(--mut)
+        }
+
+        .cta {
+            background: var(--navy);
+            color: #fff;
+            text-align: center
+        }
+
+        .cta h2 {
+            margin: 0 auto 16px
+        }
+
+        .cta p {
+            color: #B8C7D9;
+            margin: 0 auto 32px;
+            font-size: 18px;
+            max-width: 600px
+        }
+
+        footer {
+            background: var(--alt);
+            padding: 56px 0;
+            font-size: 14px;
+            color: var(--mut)
+        }
+
+        footer .w {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px
+        }
+
+        footer h4 {
+            color: var(--txt);
+            margin: 0 0 12px;
+            font-size: 14px
+        }
+
+        footer a {
+            display: block;
+            margin-bottom: 8px
+        }
+
+        .note {
+            font-size: 13px;
+            color: var(--mut);
+            margin-top: 16px
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="w"><a class="logo" href="#topo"><i></i>CARFA/Web</a>
+            <nav><a href="#como">Como funciona</a><a href="#compradores">Para compradores</a><a
+                    href="#fornecedores">Para fornecedores</a><a href="#confianca">Confiabilidade</a></nav>
+            <a class="btn" href="#cta">Entrar</a><a class="btn p" href="#cta">Começar agora</a>
+        </div>
+    </header>
+
+    <section id="topo" style="padding-top:72px">
+        <div class="w two">
+            <div>
+                <div class="eye">Plataforma B2B de fornecedores</div>
+                <h1>Quem precisa comprar encontra. Quem tem para fornecer, conecta.</h1>
+                <p class="l">Encontre fornecedores, solicite orçamentos e descubra novas oportunidades comerciais. Tudo
+                    em um só lugar, com mais praticidade, organização e confiança.</p>
+                <a class="btn p" href="#compradores">Quero encontrar fornecedores</a> <a class="btn"
+                    href="#fornecedores">Quero cadastrar minha empresa</a>
+                <p class="note">Uma plataforma feita para conectar empresas e transformar oportunidades em negócios.</p>
+            </div>
+            <div class="ui">
+                <div class="search">🔍 Material de escritório · Paraná</div>
+                <div class="row"><span class="av">PD</span><b>Papelaria Distribuidora<br><small
+                            style="color:var(--mut);font-weight:400">Curitiba · Atacado</small></b><span
+                        class="tag">Documentação verificada</span></div>
+                <div class="row"><span class="av">OF</span><b>OfficePrime Ltda<br><small
+                            style="color:var(--mut);font-weight:400">Londrina · Distribuidor</small></b><span
+                        class="tag">Documentação verificada</span></div>
+                <div class="row"><span class="av">SP</span><b>Suprimentos Paraná<br><small
+                            style="color:var(--mut);font-weight:400">Maringá · Fabricante</small></b><span
+                        class="tag w2">Certidão a vencer</span></div>
+                <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center"><small
+                        style="color:var(--mut)">3 fornecedores selecionados</small><span class="btn p"
+                        style="padding:9px 16px;font-size:14px">Solicitar orçamento</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="alt">
+        <div class="w">
+            <h2>Encontrar bons fornecedores não deveria ser complicado.</h2><br>
+            <div class="two" style="align-items:stretch">
+                <div class="card">
+                    <div class="eye">Para compradores</div>
+                    <ul class="prob">
+                        <li>Dificuldade em encontrar fornecedores adequados.</li>
+                        <li>Necessidade de contatar diversas empresas.</li>
+                        <li>Demora para receber orçamentos.</li>
+                        <li>Dificuldade para conferir a documentação.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="eye" style="color:var(--green)">Para fornecedores</div>
+                    <ul class="prob">
+                        <li>Dificuldade para conquistar novos clientes.</li>
+                        <li>Pouca visibilidade comercial.</li>
+                        <li>Dependência de indicações.</li>
+                        <li>Dificuldade para acompanhar oportunidades.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="como">
+        <div class="w">
+            <h2>Da necessidade à oportunidade, em poucos passos.</h2><br>
+            <div class="three steps">
+                <div class="step">
+                    <div class="n">01</div>
+                    <h3>Encontre e solicite</h3>
+                    <p class="l" style="font-size:16px">O comprador seleciona as categorias, descreve o que precisa e
+                        encontra fornecedores compatíveis.</p>
+                </div>
+                <div class="step">
+                    <div class="n">02</div>
+                    <h3>Receba propostas</h3>
+                    <p class="l" style="font-size:16px">Os fornecedores selecionados recebem a solicitação e enviam seus
+                        orçamentos pela plataforma.</p>
+                </div>
+                <div class="step">
+                    <div class="n">03</div>
+                    <h3>Compare e conecte-se</h3>
+                    <p class="l" style="font-size:16px">O comprador analisa as propostas, consulta a documentação e
+                        entra em contato diretamente com o fornecedor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="compradores" class="alt">
+        <div class="w two">
+            <div>
+                <div class="eye">Para quem compra</div>
+                <h2>Encontre o que precisa, com mais facilidade.</h2>
+                <p class="l">Centralize sua busca por fornecedores, receba diferentes propostas e tenha mais informações
+                    para tomar decisões de compra.</p>
+                <ul class="ck">
+                    <li>Busca por categorias e produtos</li>
+                    <li>Solicitação de múltiplos orçamentos</li>
+                    <li>Comparação de propostas</li>
+                    <li>Consulta à documentação</li>
+                    <li>Acesso direto aos canais de contato</li>
+                    <li>Cadastro e utilização gratuitos</li>
+                </ul>
+                <a class="btn p" href="#cta">Quero encontrar fornecedores</a>
+            </div>
+            <div class="ui"><b>Comparar propostas</b>
+                <div class="row"><span class="av">A</span><b>Fornecedor A</b><span>R$ 4.820</span><span
+                        class="tag">Verificado</span></div>
+                <div class="row"><span class="av">B</span><b>Fornecedor B</b><span>R$ 5.140</span><span
+                        class="tag">Verificado</span></div>
+                <div class="row"><span class="av">C</span><b>Fornecedor C</b><span>R$ 4.990</span><span
+                        class="tag w2">Pendente</span></div>
+                <small style="color:var(--mut)">A negociação acontece direto com o fornecedor.</small>
+            </div>
+        </div>
+    </section>
+
+    <section id="fornecedores">
+        <div class="w two">
+            <div class="ui"><b>Painel do fornecedor</b>
+                <div class="kpi" style="margin-top:12px">
+                    <div><b>38</b><small>Solicitações</small></div>
+                    <div><b>24</b><small>Propostas</small></div>
+                    <div><b>63%</b><small>Resposta</small></div>
+                </div>
+                <div class="row"><b>Novo pedido · Limpeza</b><span class="tag">Nova</span></div>
+                <div class="row"><b>Alvará sanitário</b><span class="tag w2">Vence em 12 dias</span></div>
+            </div>
+            <div>
+                <div class="eye">Para quem fornece</div>
+                <h2>Mais visibilidade para sua empresa. Mais oportunidades para crescer.</h2>
+                <p class="l">Apresente sua empresa a novos compradores, receba solicitações de orçamento e acompanhe
+                    suas oportunidades comerciais em um só lugar.</p>
+                <ul class="ck">
+                    <li>Perfil comercial empresarial</li>
+                    <li>Divulgação de produtos e serviços</li>
+                    <li>Recebimento de oportunidades</li>
+                    <li>Envio de propostas</li>
+                    <li>Dashboard com indicadores</li>
+                    <li>Gestão de certidões e documentos</li>
+                    <li>Alertas de vencimento</li>
+                </ul>
+                <a class="btn g" href="#cta">Quero cadastrar minha empresa</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="confianca" class="alt">
+        <div class="w two">
+            <div>
+                <div class="eye">Confiabilidade documental</div>
+                <h2>Negócios melhores começam com mais confiança.</h2>
+                <p class="l">Acreditamos que encontrar um fornecedor também significa conhecer sua empresa. Por isso,
+                    nossa plataforma permite organizar, consultar e verificar documentos empresariais, certidões e
+                    licenças conforme as exigências de cada segmento.</p>
+                <p class="note">Os documentos oficiais são emitidos pelas autoridades competentes. A plataforma organiza
+                    e verifica essas informações, sem emitir certificações oficiais.</p>
+            </div>
+            <div class="ui">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                    <b>Papelaria Distribuidora</b><span class="tag">✓ Documentação verificada</span></div>
+                <div class="row"><b>Cadastro do CNPJ</b><span class="tag">Ativo</span></div>
+                <div class="row"><b>Certidões fiscais</b><span class="tag">Válida até 03/2027</span></div>
+                <div class="row"><b>Regularidade trabalhista</b><span class="tag">Válida</span></div>
+                <div class="row"><b>Licença sanitária</b><span class="tag w2">Vence em 30 dias</span></div>
+                <div class="row"><b>Registro em órgão regulador</b><span class="tag">Válido</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="w">
+            <h2>Diversos segmentos. Infinitas possibilidades de conexão.</h2><br>
+            <div class="four">
+                <div class="card seg">
+                    <div class="ic">A</div>
+                    <h3>Alimentos e bebidas</h3>
+                </div>
+                <div class="card seg">
+                    <div class="ic">L</div>
+                    <h3>Produtos de limpeza</h3>
+                </div>
+                <div class="card seg">
+                    <div class="ic">E</div>
+                    <h3>Materiais de escritório</h3>
+                </div>
+                <div class="card seg">
+                    <div class="ic">C</div>
+                    <h3>Materiais de construção</h3>
+                </div>
+                <div class="card seg">
+                    <div class="ic">T</div>
+                    <h3>Tecnologia e informática</h3>
+                </div>
+                <div class="card seg">
+                    <div class="ic">M</div>
+                    <h3>Móveis e equipamentos</h3>
+                </div>
+                <div class="card seg">
+                    <div class="ic">S</div>
+                    <h3>Serviços de manutenção</h3>
+                </div>
+                <div class="card seg">
+                    <div class="ic">X</div>
+                    <h3>Serviços especializados</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="alt">
+        <div class="w two">
+            <div>
+                <div class="eye">Inteligência comercial</div>
+                <h2>Mais do que encontrar oportunidades. Entenda seu mercado.</h2>
+                <p class="l">Os fornecedores contam com indicadores para acompanhar suas solicitações, entender a
+                    demanda por seus produtos e identificar novas oportunidades comerciais.</p>
+            </div>
+            <div class="ui">
+                <div class="kpi">
+                    <div><b>128</b><small>Solicitações recebidas</small></div>
+                    <div><b>86</b><small>Orçamentos enviados</small></div>
+                    <div><b>67%</b><small>Taxa de resposta</small></div>
+                </div>
+                <small style="color:var(--mut)">Evolução das oportunidades (6 meses)</small>
+                <div class="bars"><span style="height:35%"></span><span style="height:48%"></span><span
+                        style="height:44%"></span><span style="height:66%"></span><span style="height:80%"></span><span
+                        style="height:95%"></span></div>
+                <div class="row" style="margin-top:10px"><b>Mais procuradas</b><span>Escritório · Limpeza ·
+                        Alimentos</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta">
+        <div class="w">
+            <h2>Sua próxima oportunidade pode começar aqui.</h2>
+            <p>Seja você quem procura um fornecedor ou quem deseja conquistar novos clientes, existe um lugar para
+                conectar essas necessidades.</p>
+            <a class="btn p" href="#compradores">Encontrar fornecedores</a> <a class="btn g"
+                href="#fornecedores">Cadastrar minha empresa</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="w">
+            <div>
+                <div class="logo" style="color:var(--txt)"><i></i>CARFA/Web</div>
+                <p style="max-width:320px">Plataforma B2B que conecta compradores e fornecedores, com cotações e
+                    verificação documental.</p>
+            </div>
+            <div>
+                <h4>Produto</h4><a href="#como">Como funciona</a><a href="#compradores">Para compradores</a><a
+                    href="#fornecedores">Para fornecedores</a>
+            </div>
+            <div>
+                <h4>Legal</h4><a href="#topo">Termos de uso</a><a href="#topo">Política de privacidade</a>
+            </div>
+            <div>
+                <h4>Contato</h4><a href="#topo">contato@exemplo.com</a><a href="#topo">LinkedIn · Instagram</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
